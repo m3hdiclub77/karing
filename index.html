@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>آموزش استفاده از برنامه</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --muted: #7d8590;
+  --line: #e6e8eb;
+  --link: #2b7bd6;
+  --card: #f5f7f9;
+  --btn: #2b7bd6;
+  --btn-text: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.06);
+  --fs: clamp(15px, 4.3vw, 18px);
+  --pad: clamp(16px, 5.5vw, 28px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17191c;
+    --text: #e8eaed;
+    --muted: #8b939d;
+    --line: #2a2e33;
+    --link: #6fb1f5;
+    --card: #20242a;
+    --btn: #3d8fe6;
+    --btn-text: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Tahoma, "Noto Naskh Arabic", Arial, sans-serif;
+  font-size: var(--fs);
+  line-height: 1.9;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+}
+.page {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(14px, 4vw, 26px) var(--pad) clamp(36px, 10vw, 64px);
+  min-height: 100vh;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  margin-bottom: clamp(10px, 3vw, 18px);
+  font-size: 0.86em;
+  color: var(--muted);
+}
+.topbar a {
+  color: var(--link);
+  text-decoration: none;
+  padding: 6px 0;
+}
+.title {
+  margin: 0 0 6px;
+  font-size: clamp(25px, 8.2vw, 38px);
+  line-height: 1.45;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.byline {
+  margin: 0 0 clamp(18px, 5vw, 28px);
+  font-size: 0.84em;
+  color: var(--muted);
+}
+.lead {
+  margin: 0 0 clamp(18px, 5vw, 26px);
+}
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 2.4vw, 12px);
+}
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: clamp(13px, 3.8vw, 18px) clamp(14px, 4vw, 20px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 1px 2px var(--shadow);
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.menu a:active {
+  transform: scale(0.98);
+  border-color: var(--link);
+}
+.menu .num {
+  flex: 0 0 auto;
+  width: 2.1em;
+  height: 2.1em;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--link);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9em;
+  line-height: 1;
+}
+.menu .txt {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.menu .name {
+  display: block;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.menu .desc {
+  display: block;
+  font-size: 0.82em;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.menu .arrow {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(45deg);
+}
+.downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 clamp(20px, 6vw, 30px);
+}
+.btn {
+  flex: 1 1 140px;
+  display: block;
+  text-align: center;
+  padding: clamp(11px, 3.4vw, 15px) 14px;
+  background: var(--btn);
+  color: var(--btn-text);
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.btn:active {
+  opacity: 0.85;
+}
+.btn.off {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.btn.ghost {
+  background: transparent;
+  color: var(--link);
+  border: 1.5px solid var(--link);
+}
+.heading {
+  margin: clamp(22px, 6vw, 32px) 0 10px;
+  font-size: 1.15em;
+  font-weight: 800;
+  line-height: 1.6;
+}
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 6vw, 30px);
+}
+.step {
+  margin: 0;
+}
+.step .cap {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 10px;
+  line-height: 1.8;
+}
+.step .badge {
+  flex: 0 0 auto;
+  min-width: 1.9em;
+  height: 1.9em;
+  padding: 0 0.4em;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--link);
+  color: #fff;
+  font-size: 0.82em;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 0.3em;
+}
+.frame {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  overflow: hidden;
+}
+.frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.missing {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 9 / 16;
+  padding: 16px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85em;
+  direction: ltr;
+}
+.note {
+  margin: 0 0 clamp(18px, 5vw, 26px);
+  padding: 12px 14px;
+  border-right: 3px solid var(--link);
+  background: var(--card);
+  border-radius: 8px;
+  font-size: 0.93em;
+}
+.pager {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: clamp(28px, 8vw, 44px);
+  padding-top: clamp(18px, 5vw, 26px);
+  border-top: 1px solid var(--line);
+}
+.foot {
+  margin-top: clamp(24px, 7vw, 40px);
+  text-align: center;
+  font-size: 0.8em;
+  color: var(--muted);
+}
+a:focus-visible, .btn:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu a { transition: none; }
+}
+</style>
+</head>
+<body>
+<main class="page" id="root"></main>
+<script>
+var SITE = {
+  title: "Karing",
+  author: "@m3hdiclub",
+  intro: "همه آموزش‌ها اینجا یکجا جمع شده. از فهرست زیر مرحله موردنظرت رو انتخاب کن.",
+  androidUrl: "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_arm.apk",
+  iosUrl: "https://apps.apple.com/us/app/karing/id6472431552",
+  adminUrl: "https://t.me/m3hdiclub",
+  imageDir: "img",
+  imageExts: ["jpg", "png", "jpeg", "webp"]
+};
+
+var PAGES = [
+  {
+    id: "install",
+    title: "مرحله نصب",
+    desc: "دانلود برنامه و تنظیمات اولیه",
+    prefix: "install",
+    downloads: true,
+    intro: "ابتدا برنامه را متناسب با گوشی خودت دانلود و نصب کن. بعد از نصب، برنامه را باز کن و مراحل زیر را مرحله‌به‌مرحله انجام بده.",
+    steps: [
+      "برنامه را باز کن.",
+      "مرحله دوم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله سوم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله چهارم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله پنجم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله ششم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله هفتم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله هشتم تنظیمات اولیه را مطابق تصویر انجام بده.",
+      "مرحله آخر را انجام بده؛ تنظیمات اولیه کامل شد."
+    ]
+  },
+  {
+    id: "service",
+    title: "مرحله قرار دادن سرویس",
+    desc: "اضافه کردن لینک سرویس به برنامه",
+    prefix: "service",
+    admin: true,
+    intro: "برای شروع، لینک سرویس را از ادمین دریافت کن و آن را کپی کن. سپس مطابق تصاویر زیر لینک را داخل برنامه قرار بده.",
+    steps: [
+      "لینک سرویس را از ادمین دریافت و کپی کن.",
+      "برنامه را باز کن و مطابق تصویر پیش برو.",
+      "مرحله سوم را مطابق تصویر انجام بده.",
+      "لینک کپی‌شده را در محل مشخص‌شده قرار بده.",
+      "تأیید کن تا سرویس اضافه شود."
+    ]
+  },
+  {
+    id: "update",
+    title: "مرحله آپدیت سرویس",
+    desc: "به‌روزرسانی سرویس‌ها",
+    prefix: "update",
+    intro: "برای به‌روزرسانی سرویس، مطابق دو تصویر زیر پیش برو.",
+    steps: [
+      "مطابق تصویر وارد بخش سرویس‌ها شو.",
+      "مطابق تصویر سرویس را به‌روزرسانی کن."
+    ]
+  },
+  {
+    id: "ping",
+    title: "مرحله پینگ گرفتن",
+    desc: "تست سرعت و وضعیت سرویس",
+    prefix: "ping",
+    intro: "برای گرفتن پینگ و بررسی وضعیت سرویس، مطابق دو تصویر زیر پیش برو.",
+    steps: [
+      "مطابق تصویر وارد بخش مربوط به پینگ شو.",
+      "مطابق تصویر پینگ را بگیر و نتیجه را ببین."
+    ]
+  },
+  {
+    id: "settings",
+    title: "تنظیمات",
+    desc: "تنظیمات برنامه و Auto Select",
+    prefix: "settings",
+    intro: "از این بخش تنظیمات مختلف برنامه را انتخاب کن.",
+    children: [
+      {
+        id: "auto-select",
+        title: "Auto Select",
+        desc: "انتخاب خودکار بهترین سرویس",
+        prefix: "auto-select",
+        intro: "با فعال کردن Auto Select، برنامه به‌صورت خودکار بهترین سرویس را انتخاب می‌کند. مطابق دو تصویر زیر پیش برو.",
+        steps: [
+          "مطابق تصویر وارد تنظیمات شو و گزینه Auto Select را پیدا کن.",
+          "مطابق تصویر تنظیم را انجام بده و ذخیره کن."
+        ]
+      }
+    ]
+  }
+];
+
+var root = document.getElementById("root");
+
+function fa(n) {
+  return Number(n).toLocaleString("fa-IR", { useGrouping: false });
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c];
+  });
+}
+
+function imgSrc(prefix, n, extIndex) {
+  return SITE.imageDir + "/" + prefix + "-" + n + "." + SITE.imageExts[extIndex];
+}
+
+function stepHtml(page, i) {
+  var n = i + 1;
+  return (
+    "<figure class=\"step\">" +
+    "<p class=\"cap\"><span class=\"badge\">" + fa(n) + "</span><span>" + esc(page.steps[i]) + "</span></p>" +
+    "<div class=\"frame\"><img src=\"" + imgSrc(page.prefix, n, 0) + "\" data-prefix=\"" + page.prefix + "\" data-n=\"" + n + "\" data-ext=\"0\" alt=\"" + esc(page.steps[i]) + "\" loading=\"lazy\" decoding=\"async\"></div>" +
+    "</figure>"
+  );
+}
+
+function btnHtml(label, url, cls) {
+  if (!url) {
+    return "<a class=\"btn off " + (cls || "") + "\" aria-disabled=\"true\">" + label + "</a>";
+  }
+  return "<a class=\"btn " + (cls || "") + "\" href=\"" + esc(url) + "\" target=\"_blank\" rel=\"noopener\">" + label + "</a>";
+}
+
+function topbar(backHref, backLabel) {
+  return "<div class=\"topbar\"><a href=\"" + backHref + "\">" + backLabel + "</a><span>" + esc(SITE.author) + "</span></div>";
+}
+
+function renderHome() {
+  var items = PAGES.map(function (p, i) {
+    return (
+      "<li><a href=\"#/" + p.id + "\">" +
+      "<span class=\"num\">" + fa(i + 1) + "</span>" +
+      "<span class=\"txt\"><span class=\"name\">" + esc(p.title) + "</span><span class=\"desc\">" + esc(p.desc) + "</span></span>" +
+      "<span class=\"arrow\"></span></a></li>"
+    );
+  }).join("");
+  root.innerHTML =
+    "<div class=\"topbar\"><span></span><span>" + esc(SITE.author) + "</span></div>" +
+    "<h1 class=\"title\">" + esc(SITE.title) + "</h1>" +
+    "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
+    "<p class=\"lead\">" + esc(SITE.intro) + "</p>" +
+    "<ul class=\"menu\">" + items + "</ul>" +
+    "<p class=\"foot\">" + esc(SITE.author) + "</p>";
+}
+
+function renderMenuPage(page) {
+  var items = page.children.map(function (c, i) {
+    return (
+      "<li><a href=\"#/" + page.id + "/" + c.id + "\">" +
+      "<span class=\"num\">" + fa(i + 1) + "</span>" +
+      "<span class=\"txt\"><span class=\"name\">" + esc(c.title) + "</span><span class=\"desc\">" + esc(c.desc) + "</span></span>" +
+      "<span class=\"arrow\"></span></a></li>"
+    );
+  }).join("");
+  root.innerHTML =
+    topbar("#/", "بازگشت به فهرست") +
+    "<h1 class=\"title\">" + esc(page.title) + "</h1>" +
+    "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
+    "<p class=\"lead\">" + esc(page.intro) + "</p>" +
+    "<ul class=\"menu\">" + items + "</ul>" +
+    "<div class=\"pager\"><a class=\"btn ghost\" href=\"#/\">بازگشت به فهرست</a></div>";
+}
+
+function pagerHtml(index, backHref, backLabel) {
+  var html = "";
+  if (index !== null) {
+    var next = PAGES[index + 1];
+    if (next) {
+      html += "<a class=\"btn\" href=\"#/" + next.id + "\">مرحله بعد: " + esc(next.title) + "</a>";
+    }
+  }
+  html += "<a class=\"btn ghost\" href=\"" + backHref + "\">" + backLabel + "</a>";
+  return "<div class=\"pager\">" + html + "</div>";
+}
+
+function renderSteps(page, index, backHref, backLabel, backTop) {
+  var extra = "";
+  if (page.downloads) {
+    extra += "<div class=\"downloads\">" +
+      btnHtml("دانلود برای اندروید", SITE.androidUrl) +
+      btnHtml("دانلود برای آیفون (iOS)", SITE.iosUrl) +
+      "</div><h2 class=\"heading\">تنظیمات اولیه برنامه</h2>";
+  }
+  if (page.admin) {
+    extra += "<div class=\"downloads\">" + btnHtml("دریافت لینک از ادمین", SITE.adminUrl) + "</div>";
+  }
+  var steps = page.steps.map(function (_, i) { return stepHtml(page, i); }).join("");
+  root.innerHTML =
+    topbar(backHref, backTop) +
+    "<h1 class=\"title\">" + esc(page.title) + "</h1>" +
+    "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
+    "<p class=\"lead\">" + esc(page.intro) + "</p>" +
+    extra +
+    "<div class=\"steps\">" + steps + "</div>" +
+    pagerHtml(index, backHref, backLabel);
+}
+
+function findPage(id) {
+  for (var i = 0; i < PAGES.length; i++) {
+    if (PAGES[i].id === id) { return { page: PAGES[i], index: i }; }
+  }
+  return null;
+}
+
+function route() {
+  var hash = location.hash.replace(/^#\/?/, "");
+  var parts = hash.split("/").filter(Boolean);
+  var found = parts.length ? findPage(parts[0]) : null;
+  var title = SITE.title;
+
+  if (!found) {
+    renderHome();
+  } else if (found.page.children && parts[1]) {
+    var child = null;
+    found.page.children.forEach(function (c) { if (c.id === parts[1]) { child = c; } });
+    if (child) {
+      renderSteps(child, null, "#/" + found.page.id, "بازگشت به " + found.page.title, "بازگشت");
+      title = child.title + " | " + SITE.title;
+    } else {
+      renderMenuPage(found.page);
+      title = found.page.title + " | " + SITE.title;
+    }
+  } else if (found.page.children) {
+    renderMenuPage(found.page);
+    title = found.page.title + " | " + SITE.title;
+  } else {
+    renderSteps(found.page, found.index, "#/", "بازگشت به فهرست", "بازگشت به فهرست");
+    title = found.page.title + " | " + SITE.title;
+  }
+
+  document.title = title;
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener("error", function (e) {
+  var el = e.target;
+  if (!el || el.tagName !== "IMG" || !el.dataset.prefix) { return; }
+  var next = Number(el.dataset.ext) + 1;
+  if (next < SITE.imageExts.length) {
+    el.dataset.ext = String(next);
+    el.src = imgSrc(el.dataset.prefix, el.dataset.n, next);
+  } else {
+    var box = document.createElement("div");
+    box.className = "missing";
+    box.textContent = SITE.imageDir + "/" + el.dataset.prefix + "-" + el.dataset.n + ".jpg";
+    el.parentNode.replaceChild(box, el);
+  }
+}, true);
+
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
