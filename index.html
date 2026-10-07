@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#f3f3f6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d0e12" media="(prefers-color-scheme: dark)">
 <title>Karing</title>
-<link rel="icon" href="img/logo.jpg">
 <style>
 :root {
   --bg: #f3f3f6;
@@ -791,6 +790,23 @@ function norm(s) {
   return String(s).replace(/\u064a/g, "\u06cc").replace(/\u0643/g, "\u06a9").replace(/\u200c/g, " ").toLowerCase().trim();
 }
 
+function logoSrc(extIndex) {
+  return SITE.imageDir + "/" + SITE.logo + "." + SITE.imageExts[extIndex];
+}
+
+function setFavicon(i) {
+  if (i >= SITE.imageExts.length) { return; }
+  var probe = new Image();
+  probe.onload = function () {
+    var link = document.createElement("link");
+    link.rel = "icon";
+    link.href = logoSrc(i);
+    document.head.appendChild(link);
+  };
+  probe.onerror = function () { setFavicon(i + 1); };
+  probe.src = logoSrc(i);
+}
+
 function imgSrc(prefix, n, extIndex) {
   return SITE.imageDir + "/" + prefix + "-" + n + "." + SITE.imageExts[extIndex];
 }
@@ -875,7 +891,7 @@ function renderHome() {
   var hasProgress = Object.keys(d.done).length > 0 || !!d.lastKey;
   root.innerHTML =
     "<div class=\"page\">" +
-    "<div class=\"brand\"><img class=\"logo\" src=\"" + SITE.imageDir + "/" + SITE.logo + "\" alt=\"" + esc(SITE.brand) + "\"><div class=\"brand-text\"><span class=\"brand-name\">" + esc(SITE.brand) + "</span><span class=\"byline\">" + esc(SITE.author) + "</span></div></div>" +
+    "<div class=\"brand\"><img class=\"logo\" data-ext=\"0\" src=\"" + logoSrc(0) + "\" alt=\"" + esc(SITE.brand) + "\"><div class=\"brand-text\"><span class=\"brand-name\">" + esc(SITE.brand) + "</span><span class=\"byline\">" + esc(SITE.author) + "</span></div></div>" +
     "<p class=\"lead\">" + esc(SITE.intro) + "</p>" +
     "<label class=\"search\">" + ic("search") + "<input id=\"q\" type=\"search\" placeholder=\"جستجو در آموزش‌ها\" autocomplete=\"off\" enterkeyhint=\"search\"></label>" +
     "<div class=\"list\" id=\"list\">" + listHtml("") + "</div>" +
@@ -1112,6 +1128,12 @@ document.addEventListener("load", function (e) {
 document.addEventListener("error", function (e) {
   var el = e.target;
   if (el && el.tagName === "IMG" && el.classList.contains("logo")) {
+    var nextLogo = Number(el.dataset.ext) + 1;
+    if (nextLogo < SITE.imageExts.length) {
+      el.dataset.ext = String(nextLogo);
+      el.src = logoSrc(nextLogo);
+      return;
+    }
     var fb = document.createElement("span");
     fb.className = "mark";
     fb.innerHTML = ic("bolt");
@@ -1155,6 +1177,7 @@ document.addEventListener("keydown", function (e) {
 });
 
 window.addEventListener("hashchange", route);
+setFavicon(0);
 route();
 </script>
 </body>
