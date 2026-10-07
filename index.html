@@ -79,8 +79,23 @@ svg.ic {
   min-width: 0;
   line-height: 1.5;
 }
+.brand-text .by {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+}
 .brand-text .byline {
   margin: 0;
+}
+.avatar {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: var(--surface);
 }
 .logo {
   flex: 0 0 auto;
@@ -643,8 +658,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 <script>
 var SITE = {
   brand: "Karing",
-  title: "آموزش استفاده از برنامه",
-  author: "mhD",
+  logo: "karing",
+  channelLogo: "logo",
+  author: "نام کانال یا ادمین",
   intro: "همه آموزش‌ها اینجا یکجا جمع شده. از فهرست زیر آموزش موردنظرت رو انتخاب کن.",
   androidUrl: "https://github.com/KaringX/karing/releases/download/v1.2.25.2802/karing_1.2.25.2802_android_arm.apk",
   iosUrl: "https://apps.apple.com/us/app/karing/id6472431552",
@@ -790,8 +806,8 @@ function norm(s) {
   return String(s).replace(/\u064a/g, "\u06cc").replace(/\u0643/g, "\u06a9").replace(/\u200c/g, " ").toLowerCase().trim();
 }
 
-function logoSrc(extIndex) {
-  return SITE.imageDir + "/" + SITE.logo + "." + SITE.imageExts[extIndex];
+function logoSrc(name, extIndex) {
+  return SITE.imageDir + "/" + name + "." + SITE.imageExts[extIndex];
 }
 
 function setFavicon(i) {
@@ -800,11 +816,11 @@ function setFavicon(i) {
   probe.onload = function () {
     var link = document.createElement("link");
     link.rel = "icon";
-    link.href = logoSrc(i);
+    link.href = logoSrc(SITE.logo, i);
     document.head.appendChild(link);
   };
   probe.onerror = function () { setFavicon(i + 1); };
-  probe.src = logoSrc(i);
+  probe.src = logoSrc(SITE.logo, i);
 }
 
 function imgSrc(prefix, n, extIndex) {
@@ -891,7 +907,7 @@ function renderHome() {
   var hasProgress = Object.keys(d.done).length > 0 || !!d.lastKey;
   root.innerHTML =
     "<div class=\"page\">" +
-    "<div class=\"brand\"><img class=\"logo\" data-ext=\"0\" src=\"" + logoSrc(0) + "\" alt=\"" + esc(SITE.brand) + "\"><div class=\"brand-text\"><span class=\"brand-name\">" + esc(SITE.brand) + "</span><span class=\"byline\">" + esc(SITE.author) + "</span></div></div>" +
+    "<div class=\"brand\"><img class=\"logo\" data-name=\"" + SITE.logo + "\" data-ext=\"0\" src=\"" + logoSrc(SITE.logo, 0) + "\" alt=\"" + esc(SITE.brand) + "\"><div class=\"brand-text\"><span class=\"brand-name\">" + esc(SITE.brand) + "</span><span class=\"by\"><img class=\"avatar\" data-name=\"" + SITE.channelLogo + "\" data-ext=\"0\" src=\"" + logoSrc(SITE.channelLogo, 0) + "\" alt=\"\"><span class=\"byline\">" + esc(SITE.author) + "</span></span></div></div>" +
     "<p class=\"lead\">" + esc(SITE.intro) + "</p>" +
     "<label class=\"search\">" + ic("search") + "<input id=\"q\" type=\"search\" placeholder=\"جستجو در آموزش‌ها\" autocomplete=\"off\" enterkeyhint=\"search\"></label>" +
     "<div class=\"list\" id=\"list\">" + listHtml("") + "</div>" +
@@ -1131,13 +1147,23 @@ document.addEventListener("error", function (e) {
     var nextLogo = Number(el.dataset.ext) + 1;
     if (nextLogo < SITE.imageExts.length) {
       el.dataset.ext = String(nextLogo);
-      el.src = logoSrc(nextLogo);
+      el.src = logoSrc(el.dataset.name, nextLogo);
       return;
     }
     var fb = document.createElement("span");
     fb.className = "mark";
     fb.innerHTML = ic("bolt");
     el.parentNode.replaceChild(fb, el);
+    return;
+  }
+  if (el && el.tagName === "IMG" && el.classList.contains("avatar")) {
+    var nextAv = Number(el.dataset.ext) + 1;
+    if (nextAv < SITE.imageExts.length) {
+      el.dataset.ext = String(nextAv);
+      el.src = logoSrc(el.dataset.name, nextAv);
+    } else {
+      el.remove();
+    }
     return;
   }
   if (!el || el.tagName !== "IMG" || !el.dataset.prefix) { return; }
