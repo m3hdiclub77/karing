@@ -310,13 +310,15 @@ var PAGES = [
     desc: "اضافه کردن لینک سرویس به برنامه",
     prefix: "service",
     admin: true,
+    noNext: true,
     intro: "برای شروع، لینک سرویس را از ادمین دریافت کن و آن را کپی کن. سپس مطابق تصاویر زیر لینک را داخل برنامه قرار بده.",
     steps: [
       "لینک سرویس را از ادمین دریافت و کپی کن.",
       "برنامه را باز کن و مطابق تصویر پیش برو.",
       "مرحله سوم را مطابق تصویر انجام بده.",
       "لینک کپی‌شده را در محل مشخص‌شده قرار بده.",
-      "تأیید کن تا سرویس اضافه شود."
+      "تأیید کن تا سرویس اضافه شود.",
+      "حالا مطابق تصویر به برنامه متصل شو."
     ]
   },
   {
@@ -331,23 +333,23 @@ var PAGES = [
     ]
   },
   {
-    id: "ping",
-    title: "مرحله پینگ گرفتن",
-    desc: "تست سرعت و وضعیت سرویس",
-    prefix: "ping",
-    intro: "برای گرفتن پینگ و بررسی وضعیت سرویس، مطابق دو تصویر زیر پیش برو.",
-    steps: [
-      "مطابق تصویر وارد بخش مربوط به پینگ شو.",
-      "مطابق تصویر پینگ را بگیر و نتیجه را ببین."
-    ]
-  },
-  {
-    id: "settings",
-    title: "تنظیمات",
-    desc: "تنظیمات برنامه و Auto Select",
-    prefix: "settings",
-    intro: "از این بخش تنظیمات مختلف برنامه را انتخاب کن.",
+    id: "others",
+    title: "آموزش‌های دیگر",
+    desc: "پینگ گرفتن، Auto Select و ...",
+    prefix: "others",
+    intro: "آموزش موردنظرت را از فهرست زیر انتخاب کن.",
     children: [
+      {
+        id: "ping",
+        title: "پینگ گرفتن",
+        desc: "تست سرعت و وضعیت سرویس",
+        prefix: "ping",
+        intro: "برای گرفتن پینگ و بررسی وضعیت سرویس، مطابق دو تصویر زیر پیش برو.",
+        steps: [
+          "مطابق تصویر وارد بخش مربوط به پینگ شو.",
+          "مطابق تصویر پینگ را بگیر و نتیجه را ببین."
+        ]
+      },
       {
         id: "auto-select",
         title: "Auto Select",
@@ -467,7 +469,7 @@ function renderSteps(page, index, backHref, backLabel, backTop) {
     "<p class=\"lead\">" + esc(page.intro) + "</p>" +
     extra +
     "<div class=\"steps\">" + steps + "</div>" +
-    pagerHtml(index, backHref, backLabel);
+    pagerHtml(page.noNext ? null : index, backHref, backLabel);
 }
 
 function findPage(id) {
