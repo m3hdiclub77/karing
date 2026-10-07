@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f3f3f6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0d0e12" media="(prefers-color-scheme: dark)">
-<title>آموزش استفاده از برنامه</title>
+<title>Karing</title>
+<link rel="icon" href="img/logo.jpg">
 <style>
 :root {
   --bg: #f3f3f6;
@@ -69,25 +70,51 @@ svg.ic {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: clamp(22px, 7vw, 34px);
+  gap: 14px;
+  margin-bottom: clamp(16px, 5vw, 24px);
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  line-height: 1.5;
+}
+.brand-text .byline {
+  margin: 0;
+}
+.logo {
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 .mark {
-  width: 40px;
-  height: 40px;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
   display: grid;
   place-items: center;
-  border-radius: 13px;
+  border-radius: 18px;
   background: linear-gradient(140deg, var(--accent-fill), var(--accent-deep));
   color: #ffffff;
 }
 .mark svg.ic {
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
 }
 .brand-name {
   font-weight: 800;
+  font-size: 1.35em;
+  line-height: 1.4;
   direction: ltr;
+}
+.brand + .lead {
+  margin-top: 0;
 }
 .h-title {
   margin: 0;
@@ -242,16 +269,34 @@ svg.ic {
   color: var(--muted);
 }
 .reset {
-  display: block;
-  margin: 30px auto 0;
-  padding: 6px 10px;
-  border: 0;
-  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 28px auto 0;
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
   color: var(--muted);
   font: inherit;
-  font-size: 0.8em;
-  text-decoration: underline;
+  font-size: 0.86em;
+  font-weight: 600;
+  box-shadow: var(--shadow);
   cursor: pointer;
+  transition: transform 0.12s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.reset svg.ic {
+  width: 1.2em;
+  height: 1.2em;
+}
+.reset:active {
+  transform: scale(0.97);
+}
+.reset.confirm {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 .topline {
   display: flex;
@@ -620,7 +665,8 @@ var ICONS = {
   check: "<path d=\"M5 12l5 5 9-10\"/>",
   chevL: "<path d=\"M15 6l-6 6 6 6\"/>",
   chevR: "<path d=\"M9 6l6 6-6 6\"/>",
-  search: "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/>"
+  search: "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/>",
+  trash: "<path d=\"M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3\"/>"
 };
 
 var PAGES = [
@@ -631,7 +677,7 @@ var PAGES = [
     desc: "دانلود برنامه و تنظیمات اولیه",
     prefix: "install",
     downloads: true,
-    intro: "ابتدا برنامه را متناسب با گوشی خودت دانلود و نصب کن. بعد از نصب، برنامه را باز کن و مراحل زیر را یکی‌یکی انجام بده.",
+    intro: "ابتدا برنامه را متناسب با گوشی خودت دانلود و نصب کن. بعد از نصب، برنامه را باز کن، دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده.",
     steps: [
       "برنامه را باز کن.",
       "مرحله دوم تنظیمات اولیه را مطابق تصویر انجام بده.",
@@ -652,7 +698,7 @@ var PAGES = [
     prefix: "service",
     admin: true,
     noNext: true,
-    intro: "برای شروع، لینک سرویس را از ادمین دریافت کن و آن را کپی کن. سپس مطابق تصاویر لینک را داخل برنامه قرار بده.",
+    intro: "برای شروع، لینک سرویس را از ادمین دریافت کن و آن را کپی کن. سپس دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده تا لینک داخل برنامه قرار بگیرد.",
     steps: [
       "لینک سرویس را از ادمین دریافت و کپی کن.",
       "برنامه را باز کن و مطابق تصویر پیش برو.",
@@ -677,7 +723,7 @@ var PAGES = [
         prefix: "update",
         noNext: true,
         done: "اپدیت سرویس تمام شد. حالا می‌توانید به برنامه متصل شوید.",
-        intro: "برای به‌روزرسانی سرویس، مطابق دو تصویر پیش برو.",
+        intro: "برای به‌روزرسانی سرویس، دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده.",
         steps: [
           "مطابق تصویر وارد بخش سرویس‌ها شو.",
           "مطابق تصویر سرویس را به‌روزرسانی کن."
@@ -689,7 +735,7 @@ var PAGES = [
         title: "پینگ گرفتن",
         desc: "تست سرعت و وضعیت سرویس",
         prefix: "ping",
-        intro: "برای گرفتن پینگ و بررسی وضعیت سرویس، مطابق دو تصویر پیش برو.",
+        intro: "برای گرفتن پینگ و بررسی وضعیت سرویس، دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده.",
         steps: [
           "مطابق تصویر وارد بخش مربوط به پینگ شو.",
           "مطابق تصویر پینگ را بگیر و نتیجه را ببین."
@@ -701,7 +747,7 @@ var PAGES = [
         title: "دیدن استعلام سرویس",
         desc: "مشاهده وضعیت و مصرف سرویس",
         prefix: "inquiry",
-        intro: "برای دیدن استعلام سرویس خودت، مطابق سه تصویر پیش برو.",
+        intro: "برای دیدن استعلام سرویس خودت، دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده.",
         steps: [
           "مطابق تصویر وارد بخش مربوط به سرویس شو.",
           "مطابق تصویر استعلام سرویس را ببین.",
@@ -714,7 +760,7 @@ var PAGES = [
         title: "Auto Select",
         desc: "انتخاب خودکار بهترین سرویس",
         prefix: "auto-select",
-        intro: "با فعال کردن Auto Select، برنامه به‌صورت خودکار بهترین سرویس را انتخاب می‌کند. مطابق دو تصویر پیش برو.",
+        intro: "با فعال کردن Auto Select، برنامه به‌صورت خودکار بهترین سرویس را انتخاب می‌کند. دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده.",
         steps: [
           "مطابق تصویر وارد تنظیمات شو و گزینه Auto Select را پیدا کن.",
           "مطابق تصویر تنظیم را انجام بده و ذخیره کن."
@@ -829,20 +875,29 @@ function renderHome() {
   var hasProgress = Object.keys(d.done).length > 0 || !!d.lastKey;
   root.innerHTML =
     "<div class=\"page\">" +
-    "<div class=\"brand\"><span class=\"mark\">" + ic("bolt") + "</span><span class=\"brand-name\">" + esc(SITE.brand) + "</span></div>" +
-    "<h1 class=\"h-title\">" + esc(SITE.title) + "</h1>" +
-    "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
+    "<div class=\"brand\"><img class=\"logo\" src=\"" + SITE.imageDir + "/" + SITE.logo + "\" alt=\"" + esc(SITE.brand) + "\"><div class=\"brand-text\"><span class=\"brand-name\">" + esc(SITE.brand) + "</span><span class=\"byline\">" + esc(SITE.author) + "</span></div></div>" +
     "<p class=\"lead\">" + esc(SITE.intro) + "</p>" +
     "<label class=\"search\">" + ic("search") + "<input id=\"q\" type=\"search\" placeholder=\"جستجو در آموزش‌ها\" autocomplete=\"off\" enterkeyhint=\"search\"></label>" +
     "<div class=\"list\" id=\"list\">" + listHtml("") + "</div>" +
-    (hasProgress ? "<button class=\"reset\" id=\"reset\" type=\"button\">پاک کردن پیشرفت</button>" : "") +
+    (hasProgress ? "<button class=\"reset\" id=\"reset\" type=\"button\">" + ic("trash") + "<span>پاک کردن پیشرفت</span></button>" : "") +
     "</div>";
   document.getElementById("q").addEventListener("input", function (e) {
     document.getElementById("list").innerHTML = listHtml(e.target.value);
   });
   var reset = document.getElementById("reset");
   if (reset) {
+    var timer = null;
     reset.addEventListener("click", function () {
+      if (!reset.classList.contains("confirm")) {
+        reset.classList.add("confirm");
+        reset.querySelector("span").textContent = "برای تأیید دوباره بزن";
+        timer = setTimeout(function () {
+          reset.classList.remove("confirm");
+          reset.querySelector("span").textContent = "پاک کردن پیشرفت";
+        }, 3000);
+        return;
+      }
+      clearTimeout(timer);
       store.clear();
       renderHome();
     });
@@ -1024,7 +1079,7 @@ function route() {
   if (parts[0]) {
     PAGES.forEach(function (p, i) { if (p.id === parts[0]) { top = p; topIndex = i; } });
   }
-  var title = SITE.title;
+  var title = SITE.brand;
   document.body.style.overflow = "";
 
   if (!top) {
@@ -1034,14 +1089,14 @@ function route() {
     top.children.forEach(function (c) { if (c.id === parts[1]) { child = c; } });
     if (child) {
       renderTutorial(child, top.id + "/" + child.id, top, topIndex, slide);
-      title = child.title + " | " + SITE.title;
+      title = child.title + " | " + SITE.brand;
     } else {
       renderMenu(top);
-      title = top.title + " | " + SITE.title;
+      title = top.title + " | " + SITE.brand;
     }
   } else {
     renderTutorial(top, top.id, null, topIndex, slide);
-    title = top.title + " | " + SITE.title;
+    title = top.title + " | " + SITE.brand;
   }
   document.title = title;
   window.scrollTo(0, 0);
@@ -1056,6 +1111,13 @@ document.addEventListener("load", function (e) {
 
 document.addEventListener("error", function (e) {
   var el = e.target;
+  if (el && el.tagName === "IMG" && el.classList.contains("logo")) {
+    var fb = document.createElement("span");
+    fb.className = "mark";
+    fb.innerHTML = ic("bolt");
+    el.parentNode.replaceChild(fb, el);
+    return;
+  }
   if (!el || el.tagName !== "IMG" || !el.dataset.prefix) { return; }
   var next = Number(el.dataset.ext) + 1;
   if (next < SITE.imageExts.length) {
