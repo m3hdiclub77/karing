@@ -429,7 +429,7 @@ function btnHtml(label, url, cls) {
 }
 
 function topbar(backHref, backLabel) {
-  return "<div class=\"topbar\"><a href=\"" + backHref + "\">" + backLabel + "</a><span>" + esc(SITE.author) + "</span></div>";
+  return "<div class=\"topbar\"><a href=\"" + backHref + "\">" + backLabel + "</a></div>";
 }
 
 function renderHome() {
@@ -442,12 +442,10 @@ function renderHome() {
     );
   }).join("");
   root.innerHTML =
-    "<div class=\"topbar\"><span></span><span>" + esc(SITE.author) + "</span></div>" +
-    "<h1 class=\"title\">" + esc(SITE.title) + "</h1>" +
+        "<h1 class=\"title\">" + esc(SITE.title) + "</h1>" +
     "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
     "<p class=\"lead\">" + esc(SITE.intro) + "</p>" +
-    "<ul class=\"menu\">" + items + "</ul>" +
-    "<p class=\"foot\">" + esc(SITE.author) + "</p>";
+    "<ul class=\"menu\">" + items + "</ul>";
 }
 
 function renderMenuPage(page) {
