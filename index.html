@@ -525,6 +525,15 @@ svg.ic {
   background: var(--accent-soft);
   color: var(--accent);
 }
+.intro-fit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+.intro-fit .shot {
+  max-height: 44vh;
+}
 .actions {
   width: 100%;
   display: flex;
@@ -677,6 +686,8 @@ var ICONS = {
   ping: "<path d=\"M3 12h4l3-8 4 16 3-8h4\"/>",
   inquiry: "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/>",
   bolt: "<path d=\"M13 2L4 14h7l-1 8 9-12h-7z\"/>",
+  error: "<path d=\"M12 3l10 18H2z\"/><path d=\"M12 10v5M12 18v.01\"/>",
+  qr: "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1\"/><path d=\"M14 14h3v3h-3zM20 14v.01M14 20h3M20 17v4\"/>",
   check: "<path d=\"M5 12l5 5 9-10\"/>",
   chevL: "<path d=\"M15 6l-6 6 6 6\"/>",
   chevR: "<path d=\"M9 6l6 6-6 6\"/>",
@@ -779,6 +790,36 @@ var PAGES = [
         steps: [
           "مطابق تصویر وارد تنظیمات شو و گزینه Auto Select را پیدا کن.",
           "مطابق تصویر تنظیم را انجام بده و ذخیره کن."
+        ]
+      },
+      {
+        id: "error",
+        icon: "error",
+        title: "Error",
+        desc: "رفع خطای اتصال برنامه",
+        prefix: "auto-select",
+        introShot: { prefix: "error", n: 1 },
+        intro: "اگر این ارور را دریافت کردی، دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده.",
+        steps: [
+          "مطابق تصویر وارد تنظیمات شو و گزینه Auto Select را پیدا کن.",
+          "مطابق تصویر تنظیم را انجام بده و ذخیره کن."
+        ]
+      },
+      {
+        id: "qr-code",
+        icon: "qr",
+        title: "QR Code",
+        desc: "اضافه کردن سرویس با کیو آر کد",
+        prefix: "qr-code",
+        admin: true,
+        adminLabel: "دریافت کیو آر کد از ادمین",
+        intro: "برای شروع، کیو آر کد سرویس را از ادمین دریافت کن. سپس دکمه «شروع آموزش» را بزن و مراحل را یکی‌یکی انجام بده تا سرویس داخل برنامه قرار بگیرد.",
+        steps: [
+          "کیو آر کد سرویس را از ادمین دریافت کن.",
+          "برنامه را باز کن و مطابق تصویر پیش برو.",
+          "حالا کیو آر کدی که ادمین برایت فرستاده را با گزینه اسکن داخل برنامه اسکن کن.",
+          "مرحله چهارم را مطابق تصویر انجام بده.",
+          "تأیید کن تا سرویس اضافه شود."
         ]
       }
     ]
@@ -961,7 +1002,7 @@ function introSlide(page) {
     actions = linkBtn(ic("install") + "<span>دانلود برای اندروید</span>", SITE.androidUrl) +
       linkBtn(ic("install") + "<span>دانلود برای آیفون (iOS)</span>", SITE.iosUrl);
   } else if (page.admin) {
-    actions = linkBtn("<span>دریافت لینک از ادمین</span>", SITE.adminUrl);
+    actions = linkBtn("<span>" + (page.adminLabel || "دریافت لینک از ادمین") + "</span>", SITE.adminUrl);
   }
   return "<div class=\"intro\">" +
     "<span class=\"hero-ico\">" + ic(page.icon) + "</span>" +
@@ -969,6 +1010,7 @@ function introSlide(page) {
     "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
     "<p class=\"lead\">" + esc(page.intro) + "</p>" +
     "<span class=\"chip\">" + fa(page.steps.length) + " مرحله</span>" +
+    (page.introShot ? "<div class=\"intro-fit\"><img class=\"shot\" src=\"" + imgSrc(page.introShot.prefix, page.introShot.n, 0) + "\" data-prefix=\"" + page.introShot.prefix + "\" data-n=\"" + page.introShot.n + "\" data-ext=\"0\" alt=\"" + esc(page.title) + "\" decoding=\"async\"></div>" : "") +
     (actions ? "<div class=\"actions\">" + actions + "</div>" : "") +
     "</div>";
 }
