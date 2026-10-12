@@ -742,6 +742,14 @@ var PAGES = [
     intro: "آموزش موردنظرت را از فهرست زیر انتخاب کن.",
     children: [
       {
+        id: "download",
+        icon: "install",
+        title: "دانلود برنامه",
+        desc: "لینک دانلود نسخه اندروید و آیفون",
+        download: true,
+        intro: "برنامه را متناسب با گوشی خودت دانلود کن."
+      },
+      {
         id: "update",
         icon: "update",
         title: "مرحله اپدیت سرویس",
@@ -996,6 +1004,21 @@ function linkBtn(label, url) {
   return "<a class=\"btn\" href=\"" + esc(url) + "\" target=\"_blank\" rel=\"noopener\">" + label + "</a>";
 }
 
+function renderDownload(page, parent) {
+  root.innerHTML =
+    "<div class=\"page\">" +
+    "<div class=\"topline\"><a class=\"icon-btn\" href=\"#/" + parent.id + "\" aria-label=\"بازگشت\">" + ic("chevR") + "</a></div>" +
+    "<span class=\"hero-ico\">" + ic(page.icon) + "</span>" +
+    "<h1 class=\"h-title\">" + esc(page.title) + "</h1>" +
+    "<p class=\"byline\">" + esc(SITE.author) + "</p>" +
+    "<p class=\"lead\">" + esc(page.intro) + "</p>" +
+    "<div class=\"actions\">" +
+    linkBtn(ic("install") + "<span>دانلود برای اندروید</span>", SITE.androidUrl) +
+    linkBtn(ic("install") + "<span>دانلود برای آیفون (iOS)</span>", SITE.iosUrl) +
+    "</div>" +
+    "</div>";
+}
+
 function introSlide(page) {
   var actions = "";
   if (page.downloads) {
@@ -1161,7 +1184,10 @@ function route() {
   } else if (top.children) {
     var child = null;
     top.children.forEach(function (c) { if (c.id === parts[1]) { child = c; } });
-    if (child) {
+    if (child && child.download) {
+      renderDownload(child, top);
+      title = child.title + " | " + SITE.brand;
+    } else if (child) {
       renderTutorial(child, top.id + "/" + child.id, top, topIndex, slide);
       title = child.title + " | " + SITE.brand;
     } else {
